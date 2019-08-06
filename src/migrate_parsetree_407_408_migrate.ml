@@ -1528,7 +1528,8 @@ and copy_out_type_decl :
         (copy_out_type otype_type);
       To.Outcometree.otype_private =
         (copy_From_Asttypes_private_flag otype_private);
-      To.Outcometree.otype_immediate = (copy_bool otype_immediate);
+      To.Outcometree.otype_immediate =
+        (copy_out_immediacy otype_immediate);
       To.Outcometree.otype_unboxed = (copy_bool otype_unboxed);
       To.Outcometree.otype_cstrs =
         (List.map
@@ -1769,6 +1770,13 @@ and copy_out_value :
         (x0, (copy_option copy_out_value x1))
 
 and copy_float : float -> float = fun x  -> x
+
+and copy_out_immediacy :
+  From.Outcometree.out_immediacy -> To.Outcometree.out_immediacy =
+  function
+  | From.Outcometree.Unknown -> To.Outcometree.Unknown
+  | From.Outcometree.Always -> To.Outcometree.Always
+  | From.Outcometree.Always_on_64bits -> To.Outcometree.Always_on_64bits
 
 and copy_out_ident :
   From.Outcometree.out_ident -> To.Outcometree.out_ident =

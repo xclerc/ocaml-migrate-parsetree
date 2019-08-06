@@ -1431,7 +1431,8 @@ and copy_out_type_decl :
         (copy_out_type otype_type);
       To.Outcometree.otype_private =
         (copy_From_Asttypes_private_flag otype_private);
-      To.Outcometree.otype_immediate = (copy_bool otype_immediate);
+      To.Outcometree.otype_immediate =
+        (if otype_immediate then Always else Unknown);
       To.Outcometree.otype_unboxed = (copy_bool otype_unboxed);
       To.Outcometree.otype_cstrs =
         (List.map
