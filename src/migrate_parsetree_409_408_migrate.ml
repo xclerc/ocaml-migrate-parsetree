@@ -103,7 +103,7 @@ and copy_out_type_decl :
            otype_params);
       Ast_408.Outcometree.otype_type = (copy_out_type otype_type);
       Ast_408.Outcometree.otype_private = (copy_private_flag otype_private);
-      Ast_408.Outcometree.otype_immediate = otype_immediate;
+      Ast_408.Outcometree.otype_immediate = copy_otype_immediate otype_immediate;
       Ast_408.Outcometree.otype_unboxed = otype_unboxed;
       Ast_408.Outcometree.otype_cstrs =
         (List.map
@@ -1499,3 +1499,7 @@ and copy_position : Lexing.position -> Lexing.position =
       Lexing.pos_bol = pos_bol;
       Lexing.pos_cnum = pos_cnum
     }
+and copy_otype_immediate : Ast_409.Outcometree.out_immediacy -> Ast_408.Outcometree.out_immediacy = function
+  | Ast_409.Outcometree.Unknown -> Ast_408.Outcometree.Unknown
+  | Ast_409.Outcometree.Always -> Ast_408.Outcometree.Always
+  | Ast_409.Outcometree.Always_on_64bits-> Ast_408.Outcometree.Always_on_64bits
