@@ -17,6 +17,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* Ast ported on Thu Mar 21 09:50:42 GMT 2019
+   OCaml was:
+   commit 55c9ba466362f303eb4d5ed511f6fda142879137 (HEAD -> 4.08, origin/4.08)
+     Author: Nicolás Ojeda Bär <n.oje.bar@gmail.com>
+     Date:   Tue Mar 19 08:11:02 2019 +0100
+
+         Merge pull request #8521 from nojb/fix_unix_tests_408
+
+         Actually run all lib-unix tests [4.08]
+*)
+
 open Stdlib0
 open Ast_409_helper
 
@@ -3970,6 +3981,11 @@ module Outcometree = struct
     | Ocsg_method of string * bool * bool * out_type
     | Ocsg_value of string * bool * bool * out_type
 
+  type out_immediacy (*IF_CURRENT = Outcometree.out_immediacy *) =
+    | Unknown
+    | Always
+    | Always_on_64bits
+
   type out_module_type (*IF_CURRENT = Outcometree.out_module_type *) =
     | Omty_abstract
     | Omty_functor of string * out_module_type option * out_module_type
@@ -3994,7 +4010,7 @@ module Outcometree = struct
       otype_params: (string * (bool * bool)) list;
       otype_type: out_type;
       otype_private: Asttypes.private_flag;
-      otype_immediate: bool;
+      otype_immediate: out_immediacy;
       otype_unboxed: bool;
       otype_cstrs: (out_type * out_type) list }
   and out_extension_constructor (*IF_CURRENT = Outcometree.out_extension_constructor *) =
